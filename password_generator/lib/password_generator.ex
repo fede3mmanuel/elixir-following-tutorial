@@ -54,7 +54,7 @@ defmodule PasswordGenerator do
     validate_length_is_integer(length, options)
   end
 
-  def validate_length_is_integer(false, _options), do
+  defp validate_length_is_integer(false, _options) do
     {:error, "Only integers allowed for length"}
   end
 
@@ -62,21 +62,22 @@ defmodule PasswordGenerator do
     length = options["length"] |> String.trim() |> String.to_integer()
     options_without_length = Map.delete(options, "length")
     options_values = Map.values(options_without_length)
+
     value =
       options_values
-      |> Enum.all?(fn x -> String.to_atom(x) |> is_boolean())
+      |> Enum.all?(fn x -> String.to_atom(x) |> is_boolean() end)
 
     validate_options_values_are_boolean(value, length, options_without_length)
   end
 
-  defp validate_options_values_are_boolean(false, _length) do
+  defp validate_options_values_are_boolean(false, _length, _options) do
     {:error, "Only booleans allowed for options values"}
   end
 
-  def validate_options_values_are_boolean(true, length) do
+  defp validate_options_values_are_boolean(true, length, options) do
     options = included_options(options)
     invalid_options? = options |> Enum.any?(&(&1 not in @allowed_options))
-    validated_options(invalid_option?, length, options)
+    validated_options(invalid_options?, length, options)
   end
 
   defp validated_options(true, _length, _options) do
@@ -96,6 +97,15 @@ defmodule PasswordGenerator do
     get_result(strings)
   end
 
+  defp get_result(strings) do
+    string =
+      strings
+      |> Enum.shuffle()
+      |> to_string()
+
+    {:ok, string}
+  end
+
   defp include(options) do
     options
     |> Enum.map(&get(&1))
@@ -106,11 +116,13 @@ defmodule PasswordGenerator do
   end
 
   defp generate_random_strings(length, options) do
-    Enum.map(1..length, fn _ -> Enum.random(options) |> get() end )
+    Enum.map(1..length, fn _ -> Enum.random(options) |> get() end)
   end
 
   def included_options(options) do
-    Enum.filter(options, fn {key, value} -> value |> String.trim() |> String.to_existing_atom() end)
+    Enum.filter(options, fn {key, value} ->
+      value |> String.trim() |> String.to_existing_atom()
+    end)
     |> Enum.map(fn {key, _value} -> String.to_atom(key) end)
   end
 end

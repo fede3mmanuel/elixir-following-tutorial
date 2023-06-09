@@ -1,6 +1,15 @@
 defmodule PasswordGenerator do
   @moduledoc """
-  Documentation for `PasswordGenerator`.
+  Generates Random password depending on parameters, Module main function is `generate(options)`.
+  Thant function takes the options map.
+  Options example:
+        options = %{
+          "length" => "5",
+          "numbers" => "false",
+          "uppercase" => "false",
+          "symbols" => "false",
+        }
+  The options are only 4, `length`, `numbers`, `uppercase` and `symbols`.
   """
 
   @doc """

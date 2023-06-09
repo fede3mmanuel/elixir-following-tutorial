@@ -15,12 +15,28 @@ defmodule PasswordGenerator do
   @allowed_options [:length, :numbers, :uppercase, :symbols]
 
   @doc """
-  Hello world.
+  Generate Password for given options:
 
   ## Examples
+    options = %{
+      "length" => "5",
+      "numbers" => "false",
+      "uppercase" => "false",
+      "symbols" => "false"
+    }
 
-      iex> PasswordGenerator.hello()
-      :world
+      iex> PasswordGenerator.generate(options)
+      "abcdf"
+
+    options = %{
+      "length" => "5",
+      "numbers" => "true",
+      "uppercase" => "false",
+      "symbols" => "false"
+    }
+
+      iex> PasswordGenerator.generate(options)
+      "abcdf3"
 
   """
   def hello do

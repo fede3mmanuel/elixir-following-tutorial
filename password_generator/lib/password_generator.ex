@@ -12,6 +12,8 @@ defmodule PasswordGenerator do
   The options are only 4, `length`, `numbers`, `uppercase` and `symbols`.
   """
 
+  @allowed_options [:length, :numbers, :uppercase, :symbols]
+
   @doc """
   Hello world.
 

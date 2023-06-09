@@ -39,7 +39,7 @@ defmodule PasswordGenerator do
       "abcdf3"
 
   """
-  def hello do
-    :world
+  @spec generate(options :: map()) :: {:ok, bitstring()} | {:error, bitstring()}
+  def generate(options) do
   end
 end
